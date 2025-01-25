@@ -2,12 +2,12 @@
   "name": "medical-research-backend",
   "version": "1.0.0",
   "type": "module",
-  "main": "server.js",
+  "main": "api/index.js",
   "engines": {
     "node": "18.x"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node api/index.js",
     "vercel-build": "echo hello"
   },
   "dependencies": {
