@@ -24,7 +24,7 @@ app.use(cors({
     // السماح بالطلبات من المتصفح مباشرة (للاختبار)
     if (!origin) return callback(null, true);
     
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+    if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -128,8 +128,8 @@ schedule.scheduleJob(config.pdfUpdateInterval, () => {
     generateNewPdf();
 });
 
-// مسار اختبار بسيط
-app.get('/test', (req, res) => {
+// مسار اختبار
+app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend is working!' });
 });
 
@@ -179,3 +179,6 @@ app.listen(PORT, () => {
     console.log('وضع التشغيل:', process.env.NODE_ENV);
     console.log('Origins المسموح بها:', config.allowedOrigins);
 });
+
+// تصدير التطبيق لـ Vercel
+export default app;
