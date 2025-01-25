@@ -12,10 +12,19 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
-// إعداد CORS للأمان
+// تكوين CORS
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || config.allowedOrigins.includes(origin)) {
+    const allowedOrigins = [
+      'https://medical-research-analysis.vercel.app',
+      'http://localhost:5173',
+      'http://localhost:3000'
+    ];
+    
+    // السماح بالطلبات من المتصفح مباشرة (للاختبار)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -117,6 +126,11 @@ generateNewPdf();
 // جدولة إنشاء ملف PDF جديد كل 5 دقائق
 schedule.scheduleJob(config.pdfUpdateInterval, () => {
     generateNewPdf();
+});
+
+// مسار اختبار بسيط
+app.get('/test', (req, res) => {
+  res.json({ message: 'Backend is working!' });
 });
 
 // مسار للحصول على آخر ملف PDF
